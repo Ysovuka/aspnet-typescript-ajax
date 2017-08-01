@@ -10,7 +10,6 @@ using Web.viewmodels;
 
 namespace Web.Controllers
 {
-    [Route("api/[controller]/[action]/{id?}")]
     public class ValuesController : Controller
     {
         public static IList<Item> _values = new List<Item>()
@@ -20,19 +19,19 @@ namespace Web.Controllers
         };
 
         // GET: api/values
-        [HttpGet]
+        [HttpGet("api/items")]
         public IActionResult GetItems()
         {
             return Json(_values);
         }
 
-        [HttpGet]
+        [HttpGet("api/item/{id}")]
         public IActionResult GetItem(Guid id)
         {
             return Json(_values.FirstOrDefault(i => i.Id == id));
         }
 
-        [HttpPost]
+        [HttpPost("api/item")]
         public IActionResult PostItem([FromBody] Item item)
         {
             _values.Add(item);
@@ -40,7 +39,7 @@ namespace Web.Controllers
             return Json(item);
         }
 
-        [HttpPut]
+        [HttpPut("api/item")]
         public IActionResult PutItem([FromBody] ItemViewModel viewModel)
         {
             if (string.IsNullOrEmpty(viewModel.Id)) return Json(new { error = "No valid id specified."});
@@ -52,7 +51,7 @@ namespace Web.Controllers
             return Json(_values);
         }
 
-        [HttpPatch]
+        [HttpPatch("api/item")]
         public IActionResult PatchItem([FromBody] ItemViewModel viewModel)
         {
             if (string.IsNullOrEmpty(viewModel.Id)) return Json(new { error = "No valid id specified." });
@@ -64,7 +63,7 @@ namespace Web.Controllers
             return Json(_values);
         }
 
-        [HttpDelete]
+        [HttpDelete("api/item/{id}")]
         public IActionResult DeleteItem(Guid id)
         {
             var item = _values.FirstOrDefault(i => i.Id == id);
