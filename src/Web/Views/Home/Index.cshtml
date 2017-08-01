@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="scripts/lib/system.src.js"></script>
+    <script>
+        getValues = function () { }
+        getValue = function (id) { }
+        postValue = function (data, contentType) { }
+        deleteValue = function (id) { }
+        putValue = function (data, contentType) { }
+        patchValue = function (data, contentType) { }
+        System.config({
+                packages: {
+                    'scripts': {
+                        format: 'cjs',
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+        System.import('scripts/app').then(function (exports) {
+            getValues = exports.getValues;
+            getValue = exports.getValue;
+            postValue = exports.postValue;
+            deleteValue = exports.deleteValue;
+            putValue = exports.putValue;
+            patchValue = exports.patchValue;
+        });
+    </script>
+</head>
+<body>
+    <div id="response"></div><br /><br />
+
+    <input type="button" value="GET ITEMS" onclick="getValues()"><br />
+
+    <input id="itemId" type="text"/><input type="button" value="GET ITEM" onclick="getValue(document.getElementById('itemId').value);"/><input type="button" value="DELETE ITEM" onclick="deleteValue(document.getElementById('itemId').value);" /><br />
+
+    <input id="newValue" type="text" /><input type="button" value="POST ITEM" onclick="postValue(JSON.stringify({ value: document.getElementById('newValue').value }), 'application/json');" /><br />
+
+    <input id="putId" type="text"/><input id="putValue" type="text" /><input type="button" value="PUT ITEM" onclick="putValue(JSON.stringify({ id: document.getElementById('putId').value, value: document.getElementById('putValue').value }), 'application/json');"/>
+    <input type="button" value="PATCH ITEM" onclick="patchValue(JSON.stringify({ id: document.getElementById('putId').value, value: document.getElementById('putValue').value }), 'application/json');" /><br />
+    
+</body>
+</html>
