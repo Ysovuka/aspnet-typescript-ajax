@@ -43,11 +43,11 @@ namespace Web.Controllers
         [HttpPut]
         public IActionResult PutItem([FromBody] ItemViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.Id)) viewModel.Id = default(Guid).ToString();
+            if (string.IsNullOrEmpty(viewModel.Id)) return Json(new { error = "No valid id specified."});
 
             var storedItem = _values.FirstOrDefault(i => i.Id == Guid.Parse(viewModel.Id));
             if (storedItem != null) storedItem.Value = viewModel.Value;
-            else _values.Add(new Item { Value = viewModel.Value });
+            else _values.Add(new Item { Id = Guid.Parse(viewModel.Id), Value = viewModel.Value });
 
             return Json(_values);
         }
@@ -55,7 +55,7 @@ namespace Web.Controllers
         [HttpPatch]
         public IActionResult PatchItem([FromBody] ItemViewModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.Id)) viewModel.Id = default(Guid).ToString();
+            if (string.IsNullOrEmpty(viewModel.Id)) return Json(new { error = "No valid id specified." });
 
             var storedItem = _values.FirstOrDefault(i => i.Id == Guid.Parse(viewModel.Id));
             if (storedItem != null) storedItem.Value = viewModel.Value;
